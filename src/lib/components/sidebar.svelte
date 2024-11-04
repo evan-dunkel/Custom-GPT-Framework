@@ -11,6 +11,11 @@
 	import Factory from 'lucide-svelte/icons/factory';
 	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
 	import { page } from '$app/stores';
+	import { chats, createChat, deleteChat } from '$lib/stores/chats';
+	import { goto } from '$app/navigation';
+	import Trash from 'lucide-svelte/icons/trash';
+	import MessageSquare from 'lucide-svelte/icons/message-square';
+	import * as Collapsible from '$lib/components/ui/collapsible/index.js';
 
 	// Menu items.
 	const items = [
@@ -60,6 +65,12 @@
 			}
 		]
 	};
+
+	function handleAddChat() {
+		console.log('clicked');
+		const newChatId = createChat();
+		goto(`/chat/${newChatId}`);
+	}
 </script>
 
 <Sidebar.Root>
@@ -83,10 +94,35 @@
 		</Sidebar.Group>
 		<Sidebar.Group>
 			<Sidebar.GroupLabel>Chats</Sidebar.GroupLabel>
-			<Sidebar.GroupAction title="Add Chat">
+			<Sidebar.GroupAction title="Add Chat" on:click={handleAddChat}>
 				<Plus /> <span class="sr-only">Add Chat</span>
 			</Sidebar.GroupAction>
-			<Sidebar.GroupContent />
+			<Sidebar.GroupContent>
+				<Sidebar.Menu>
+					{#each $chats as chat (chat.id)}
+						<Sidebar.MenuItem>
+							<Sidebar.MenuButton>
+								<!-- <Collapsible.Trigger> -->
+								{#snippet child({ props })}
+									<a href="/chat/{chat.id}" {...props} class="flex items-center justify-between">
+										<div class="flex items-center gap-2">
+											<MessageSquare class="h-4 w-4" />
+											<span>{chat.title}</span>
+										</div>
+										<button
+											class="opacity-0 transition-opacity group-hover/menu-item:opacity-100"
+											on:click|preventDefault={() => deleteChat(chat.id)}
+										>
+											<Trash class="h-4 w-4" />
+										</button>
+									</a>
+								{/snippet}
+								<!-- </Collapsible.Trigger> -->
+							</Sidebar.MenuButton>
+						</Sidebar.MenuItem>
+					{/each}
+				</Sidebar.Menu>
+			</Sidebar.GroupContent>
 		</Sidebar.Group>
 		<Sidebar.Group>
 			<Sidebar.GroupLabel>Projects</Sidebar.GroupLabel>

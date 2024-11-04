@@ -1,8 +1,14 @@
 <script lang="ts">
-import Chat from '$lib/components/chat.svelte';
-import { pageTitle } from '$lib/stores/page';
+	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
+	import { createChat } from '$lib/stores/chats';
 
-$pageTitle = 'Chat';
+	onMount(() => {
+		const newChatId = createChat();
+		goto(`/chat/${newChatId}`);
+	});
 </script>
 
-<Chat />
+<div class="flex h-full items-center justify-center">
+	<p>Creating new chat...</p>
+</div>

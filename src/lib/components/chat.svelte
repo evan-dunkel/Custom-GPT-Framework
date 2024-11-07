@@ -28,6 +28,7 @@
 	// Add these props
 	export let onSubmit: ((message: string) => void) | undefined = undefined;
 	export let initialMessage = '';
+	export let agent: { name: string; seed: string };
 
 	// Set initial message if provided
 	$input = initialMessage;
@@ -78,7 +79,7 @@
 
 <div class="flex flex-col gap-2 border-t border-border px-4 py-4">
 	<form class="flex items-center gap-2" on:submit={handleSubmit}>
-		<Input bind:value={$input} />
+		<Input bind:value={$input} placeholder="Ask {agent.name} a question..." />
 		<Button variant="default" size="icon" type="submit">
 			<ArrowUp />
 		</Button>

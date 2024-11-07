@@ -12,6 +12,13 @@
 
 	$pageTitle = 'Sales';
 
+	const agent = {
+		name: 'Taylor',
+		seed: 'Sophia',
+		description:
+			"Your AI-powered sales companion. I can help you create contracts, manage client relationships, and optimize your sales pipeline. Let's work together to grow your business and close more deals."
+	};
+
 	const cards = [
 		{
 			title: 'Create a Contract',
@@ -44,14 +51,9 @@
 	];
 </script>
 
-<Chat>
+<Chat {agent}>
 	<div class="w-full place-items-center">
-		<AiAssistantHeader
-			name="Taylor"
-			seed="Sophia"
-			description="Your AI-powered sales companion. I can help you create contracts, manage client relationships, and optimize your sales pipeline. Let's work together to grow your business and close more deals."
-		/>
-
+		<AiAssistantHeader {...agent} />
 		<FeatureCardGrid {cards} />
 	</div>
 </Chat>

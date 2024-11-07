@@ -11,6 +11,13 @@
 
 	$pageTitle = 'Marketing';
 
+	const agent = {
+		name: 'Corey',
+		seed: 'corey-------------------',
+		description:
+			"Your AI-powered marketing assistant. I can help you create engaging LinkedIn posts, plan your content strategy, and design effective email campaigns. Let's work together to grow your brand and engage your audience."
+	};
+
 	const cards = [
 		{
 			title: 'LinkedIn Post Generator',
@@ -43,13 +50,9 @@
 	];
 </script>
 
-<Chat>
+<Chat {agent}>
 	<div class="w-full place-items-center">
-		<AiAssistantHeader
-			name="Corey"
-			seed="corey-------------------"
-			description="Your AI-powered marketing assistant. I can help you create engaging LinkedIn posts, plan your content strategy, and design effective email campaigns. Let's work together to grow your brand and engage your audience."
-		/>
+		<AiAssistantHeader {...agent} />
 		<FeatureCardGrid {cards} />
 	</div>
 </Chat>

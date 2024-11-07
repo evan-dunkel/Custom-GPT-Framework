@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { pageTitle } from '$lib/stores/page';
 	import FeatureCardGrid from '$lib/components/feature-card-grid.svelte';
-	import { UsersRound } from 'lucide-svelte';
+	import { UsersRound, BriefcaseBusinessIcon } from 'lucide-svelte';
 	import AiAssistantHeader from '$lib/components/ai-assistant-header.svelte';
 	$pageTitle = 'Memory';
 
@@ -17,6 +17,12 @@
 			title: 'Add Client',
 			description: 'Add a client to your organization memory.',
 			url: '/memory/add-client',
+			icon: BriefcaseBusinessIcon
+		},
+		{
+			title: 'Add Employee',
+			description: 'Add an employee to your organization memory.',
+			url: '/memory/add-employee',
 			icon: UsersRound
 		}
 	];

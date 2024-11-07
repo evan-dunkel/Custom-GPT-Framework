@@ -9,9 +9,7 @@
 	}[];
 </script>
 
-<div
-	class="w-fullgrid-cols-1 grid gap-4 transition-all duration-300 ease-in-out md:grid-cols-2 lg:w-2/3"
->
+<div class="w-fullgrid-cols-1 grid gap-4 ease-in-out md:grid-cols-2 lg:w-2/3">
 	{#each cards as card}
 		<a href={card.url}>
 			<Card.Root class="p-4 {card.url === '#' ? 'text-gray-300' : ''} relative">

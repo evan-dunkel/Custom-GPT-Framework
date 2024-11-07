@@ -1,20 +1,23 @@
 <script lang="ts">
-	import Plus from 'lucide-svelte/icons/plus';
-	import Calendar from 'lucide-svelte/icons/calendar';
-	import House from 'lucide-svelte/icons/house';
-	import Inbox from 'lucide-svelte/icons/inbox';
-	import Search from 'lucide-svelte/icons/search';
 	import * as Tabs from '$lib/components/ui/tabs/index.js';
-	import TeamSwitcher from '$lib/components/team-switcher.svelte';
-	import ThemeSwitcher from '$lib/components/theme-switcher.svelte';
-	import BriefcaseBusiness from 'lucide-svelte/icons/briefcase-business';
-	import Factory from 'lucide-svelte/icons/factory';
 	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
 	import { page } from '$app/stores';
 	import { chats, createChat, deleteChat } from '$lib/stores/chats';
 	import { goto } from '$app/navigation';
-	import Trash from 'lucide-svelte/icons/trash';
-	import MessageSquare from 'lucide-svelte/icons/message-square';
+	import {
+		Trash,
+		Brain,
+		MessageSquare,
+		Factory,
+		Plus,
+		House,
+		Inbox,
+		Calendar,
+		Search,
+		BriefcaseBusiness
+	} from 'lucide-svelte';
+	import TeamSwitcher from '$lib/components/team-switcher.svelte';
+	import ThemeSwitcher from '$lib/components/theme-switcher.svelte';
 	import * as Collapsible from '$lib/components/ui/collapsible/index.js';
 
 	// Menu items.
@@ -38,6 +41,11 @@
 			title: 'Support',
 			url: '/support',
 			icon: Search
+		},
+		{
+			title: 'Memory',
+			url: '/memory',
+			icon: Brain
 		}
 	];
 

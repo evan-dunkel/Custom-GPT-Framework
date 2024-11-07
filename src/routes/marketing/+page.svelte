@@ -4,6 +4,8 @@
 	import * as Card from '$lib/components/ui/card/index.js';
 	import { Title } from '$lib/components/ui/sheet';
 	import { pageTitle } from '$lib/stores/page';
+	import AiAssistantHeader from '$lib/components/ai-assistant-header.svelte';
+	import FeatureCardGrid from '$lib/components/feature-card-grid.svelte';
 
 	import { House, Inbox, Calendar, PencilLine } from 'lucide-svelte';
 
@@ -43,27 +45,11 @@
 
 <Chat>
 	<div class="w-full place-items-center">
-		<div class="grid w-2/3 grid-cols-2 gap-4">
-			{#each cards as card}
-				<a href={card.url}>
-					<Card.Root class="p-4 {card.url === '#' ? 'text-gray-300' : ''} relative">
-						{#if card.url === '#'}
-							<div class="absolute inset-0 z-10 flex items-center justify-center">
-								<span class="rounded-md px-2 py-1 text-lg font-semibold text-neutral-400/50"
-									>In Development</span
-								>
-							</div>
-						{/if}
-						<Card.Title class="flex items-center gap-2 {card.url === '#' ? 'blur-[3px]' : ''}">
-							<card.icon />
-							{card.title}
-						</Card.Title>
-						<Card.Content class={card.url === '#' ? 'blur-[3px]' : ''}>
-							{card.description}
-						</Card.Content>
-					</Card.Root>
-				</a>
-			{/each}
-		</div>
-	</div></Chat
->
+		<AiAssistantHeader
+			name="Corey"
+			seed="corey-------------------"
+			description="Your AI-powered marketing assistant. I can help you create engaging LinkedIn posts, plan your content strategy, and design effective email campaigns. Let's work together to grow your brand and engage your audience."
+		/>
+		<FeatureCardGrid {cards} />
+	</div>
+</Chat>

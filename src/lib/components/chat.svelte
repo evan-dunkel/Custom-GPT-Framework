@@ -26,10 +26,21 @@
 	$: triggerContent = models.find((f) => f.value === value)?.label ?? 'Select a model';
 
 	// Add these props
+	export let onSubmit: ((message: string) => void) | undefined = undefined;
 	export let initialMessage = '';
 
 	// Set initial message if provided
 	$input = initialMessage;
+
+	// Create a custom submit handler
+	const handleFormSubmit = async (e: SubmitEvent) => {
+		e.preventDefault();
+		if (onSubmit) {
+			onSubmit($input);
+		} else {
+			await handleSubmit(e);
+		}
+	};
 </script>
 
 <div class="flex flex-1 flex-col gap-4 overflow-auto p-4">

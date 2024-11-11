@@ -28,7 +28,7 @@
 	];
 </script>
 
-<div class="flex w-full flex-col place-items-center">
+<div class="flex w-full flex-col place-items-center p-4">
 	<AiAssistantHeader {...agent} />
 	<FeatureCardGrid {cards} />
 </div>

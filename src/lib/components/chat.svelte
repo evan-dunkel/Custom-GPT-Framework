@@ -79,7 +79,7 @@
 
 <div class="flex flex-col gap-2 border-t border-border px-4 py-4">
 	<form class="flex items-center gap-2" on:submit={handleSubmit}>
-		<Input bind:value={$input} placeholder="Ask {agent.name} a question..." />
+		<Input bind:value={$input} placeholder="Ask a question..." />
 		<Button variant="default" size="icon" type="submit">
 			<ArrowUp />
 		</Button>

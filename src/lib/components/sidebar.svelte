@@ -8,13 +8,14 @@
 		Trash,
 		Brain,
 		MessageSquare,
-		Factory,
+		Sparkles,
 		Plus,
 		House,
 		Inbox,
 		Calendar,
 		Search,
-		BriefcaseBusiness
+		BriefcaseBusiness,
+		Settings
 	} from 'lucide-svelte';
 	import TeamSwitcher from '$lib/components/team-switcher.svelte';
 	import ThemeSwitcher from '$lib/components/theme-switcher.svelte';
@@ -24,7 +25,7 @@
 	const items = [
 		{
 			title: 'Accounting',
-			url: '/accounting',
+			url: '#',
 			icon: House
 		},
 		{
@@ -39,13 +40,13 @@
 		},
 		{
 			title: 'Support',
-			url: '/support',
+			url: '#',
 			icon: Search
 		},
 		{
-			title: 'Memory',
-			url: '/memory',
-			icon: Brain
+			title: 'Setup',
+			url: '/setup',
+			icon: Settings
 		}
 	];
 
@@ -62,14 +63,9 @@
 		},
 		teams: [
 			{
-				name: 'Company Inc',
-				logo: Factory,
-				plan: 'Enterprise'
-			},
-			{
-				name: 'Industry Corp.',
-				logo: BriefcaseBusiness,
-				plan: 'Startup'
+				name: 'AI Hub',
+				logo: Sparkles
+				// plan: 'Enterprise'
 			}
 		]
 	};
@@ -78,6 +74,10 @@
 		console.log('clicked');
 		const newChatId = createChat();
 		goto(`/chat/${newChatId}`);
+	}
+
+	function handleMenuItemClick() {
+		sidebarOpen.set(false);
 	}
 </script>
 
@@ -147,7 +147,7 @@
 						<Sidebar.MenuItem>
 							<Sidebar.MenuButton isActive={isActive(item.url)}>
 								{#snippet child({ props })}
-									<a href={item.url} {...props}>
+									<a href={item.url} {...props} on:click={handleMenuItemClick}>
 										<item.icon />
 										<span>{item.title}</span>
 									</a>

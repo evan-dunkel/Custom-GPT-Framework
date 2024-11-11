@@ -51,8 +51,7 @@
 </script>
 
 <Chat {agent}>
-	<div class="w-full place-items-center">
-		<AiAssistantHeader {...agent} />
+	<div class="flex h-full w-full items-center justify-center">
 		<FeatureCardGrid {cards} />
 	</div>
 </Chat>

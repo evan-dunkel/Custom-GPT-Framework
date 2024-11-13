@@ -1,6 +1,6 @@
 <script lang="ts">
 	import * as Card from '$lib/components/ui/card/index.js';
-	import { Button } from '$lib/components/ui/button';
+	import Button from '$lib/components/Button.svelte';
 	import { Copy, Pin } from 'lucide-svelte';
 	import SvelteMarkdown from 'svelte-markdown';
 	import { toast } from 'svelte-sonner';

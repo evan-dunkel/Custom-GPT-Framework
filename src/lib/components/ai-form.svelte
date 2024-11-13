@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button } from '$lib/components/ui/button';
+	import Button from '$lib/components/Button.svelte';
 	import { useChat } from '@ai-sdk/svelte';
 	import { toast } from 'svelte-sonner';
 	import InputField from './input-field.svelte';
@@ -18,7 +18,7 @@
 	let values: Record<string, string> = {};
 	let isSubmitting = false;
 
-	const { input, handleSubmit, messages, isLoading } = useChat({
+	const { input, handleSubmit, messages, stop } = useChat({
 		api: '/api/chat',
 		onFinish: () => {
 			isSubmitting = false;
@@ -46,6 +46,12 @@
 			isSubmitting = false;
 		}
 	}
+
+	function handleCancel() {
+		stop();
+		isSubmitting = false;
+		toast.success('Generation cancelled');
+	}
 </script>
 
 <AiFormLayout {title} {description}>
@@ -60,13 +66,14 @@
 				/>
 			{/each}
 		</fieldset>
-		<Button type="submit" disabled={isSubmitting}>
+		<div class="flex gap-2">
 			{#if isSubmitting}
-				Generating...
+				<Button type="button" on:click={handleCancel}>Cancel Generation</Button>
+				<Button type="submit" disabled>Generating...</Button>
 			{:else}
-				Generate
+				<Button type="submit" className="w-full">Generate</Button>
 			{/if}
-		</Button>
+		</div>
 	</form>
 
 	<svelte:fragment slot="response">

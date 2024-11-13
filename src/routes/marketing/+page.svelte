@@ -7,7 +7,7 @@
 	import AiAssistantHeader from '$lib/components/ai-assistant-header.svelte';
 	import FeatureCardGrid from '$lib/components/feature-card-grid.svelte';
 
-	import { House, Inbox, Calendar, PencilLine } from 'lucide-svelte';
+	import { House, Inbox, Target, PencilLine } from 'lucide-svelte';
 
 	$pageTitle = 'Marketing';
 
@@ -21,24 +21,23 @@
 	const cards = [
 		{
 			title: 'LinkedIn Post Generator',
-			description:
-				'Create engaging LinkedIn posts to showcase your expertise and grow your professional network.',
+			description: 'Create engaging LinkedIn posts to grow your professional network.',
 			url: '/marketing/linkedin-post',
 			icon: PencilLine
 		},
 		{
-			title: 'Content Calendar',
+			title: 'Email Subject Lines',
 			description:
-				'Plan and organize your social media content strategy across multiple platforms.',
-			url: '#',
-			icon: Calendar
+				'Craft compelling email subject lines that boost open rates and drive engagement.',
+			url: '/marketing/email-subject',
+			icon: Inbox
 		},
 		{
-			title: 'Email Campaign',
+			title: 'Generate SEO Plan',
 			description:
-				'Design effective email marketing campaigns to nurture leads and engage customers.',
-			url: '#',
-			icon: Inbox
+				'Optimize your website content with targeted keywords to boost visibility and attract more organic traffic.',
+			url: '/marketing/seo',
+			icon: Target
 		},
 		{
 			title: 'Brand Strategy',

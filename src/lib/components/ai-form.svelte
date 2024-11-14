@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Button from '$lib/components/Button.svelte';
+	import { Button } from '$lib/components/ui/button/index.js';
 	import { useChat } from '@ai-sdk/svelte';
 	import { toast } from 'svelte-sonner';
 	import InputField from './input-field.svelte';
@@ -66,12 +66,12 @@
 				/>
 			{/each}
 		</fieldset>
-		<div class="flex gap-2">
+		<div class="flex w-full gap-2">
 			{#if isSubmitting}
 				<Button type="button" on:click={handleCancel}>Cancel Generation</Button>
 				<Button type="submit" disabled>Generating...</Button>
 			{:else}
-				<Button type="submit" className="w-full">Generate</Button>
+				<Button type="submit" class="w-full">Generate</Button>
 			{/if}
 		</div>
 	</form>

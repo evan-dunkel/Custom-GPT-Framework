@@ -1,6 +1,6 @@
 <script lang="ts">
 	import * as Card from '$lib/components/ui/card/index.js';
-	import Button from '$lib/components/Button.svelte';
+	import { Button } from '$lib/components/ui/button/index.js';
 	import { Copy, Pin } from 'lucide-svelte';
 	import SvelteMarkdown from 'svelte-markdown';
 	import { toast } from 'svelte-sonner';
@@ -25,11 +25,14 @@
 							<Pin />
 							Save to Project
 						</Button>
-						<button class="m-0 p-0" on:click={() => copyMessage(message.content)}>
-							<Button variant="outline" size="default" class="ml-2 hover:opacity-70">
-								<Copy class="h-4 w-4" /> Copy
-							</Button>
-						</button>
+						<Button
+							variant="outline"
+							size="default"
+							class="ml-2 hover:opacity-70"
+							on:click={() => copyMessage(message.content)}
+						>
+							<Copy class="h-4 w-4" /> Copy
+						</Button>
 					</div>
 					<SvelteMarkdown source={message.content} />
 				</Card.Content>

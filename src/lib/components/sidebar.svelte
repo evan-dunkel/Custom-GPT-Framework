@@ -21,54 +21,61 @@
 	import ThemeSwitcher from '$lib/components/theme-switcher.svelte';
 	import * as Collapsible from '$lib/components/ui/collapsible/index.js';
 
-	// Menu items.
-	const items = [
-		{
-			title: 'Accounting',
-			url: '#',
-			icon: House
-		},
-		{
-			title: 'Marketing',
-			url: '/marketing',
-			icon: Inbox
-		},
-		{
-			title: 'Sales',
-			url: '/sales',
-			icon: Calendar
-		},
-		{
-			title: 'Support',
-			url: '#',
-			icon: Search
-		},
-		{
-			title: 'Setup',
-			url: '/setup',
-			icon: Settings
-		}
-	];
+	// // Menu items.
+	// const items = [
+	// 	{
+	// 		title: 'Accounting',
+	// 		url: '#',
+	// 		icon: House
+	// 	},
+	// 	{
+	// 		title: 'Marketing',
+	// 		url: '/marketing',
+	// 		icon: Inbox
+	// 	},
+	// 	{
+	// 		title: 'Sales',
+	// 		url: '/sales',
+	// 		icon: Calendar
+	// 	},
+	// 	{
+	// 		title: 'Support',
+	// 		url: '#',
+	// 		icon: Search
+	// 	},
+	// 	{
+	// 		title: 'Setup',
+	// 		url: '/setup',
+	// 		icon: Settings
+	// 	}
+	// ];
 
 	// Check if the current path starts with the menu item's URL
 	$: isActive = (itemUrl: string) => {
 		return $page.url.pathname.startsWith(itemUrl);
 	};
 
-	const data = {
-		user: {
-			name: 'shadcn',
-			email: 'm@example.com',
-			avatar: '/avatars/shadcn.jpg'
-		},
-		teams: [
-			{
-				name: 'AI Hub',
-				logo: Sparkles
-				// plan: 'Enterprise'
-			}
-		]
-	};
+	// const data = {
+	// 	user: {
+	// 		name: 'shadcn',
+	// 		email: 'm@example.com',
+	// 		avatar: '/avatars/shadcn.jpg'
+	// 	},
+	// 	teams: [
+	// 		{
+	// 			name: 'AI Hub',
+	// 			logo: Sparkles
+	// 			// plan: 'Enterprise'
+	// 		}
+	// 	]
+	// };
+
+	export let data;
+	const items = data.departments.map((dept) => ({
+		title: dept.title,
+		url: dept.url,
+		icon: icons[dept.icon]
+	}));
 
 	function handleAddChat() {
 		console.log('clicked');

@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Department {
+  id          String    @id @default(cuid())
+  title       String
+  description String?
+  url         String    @unique
+  icon        String    // Store icon name from lucide-icons
+  cards       Card[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Card {
+  id           String     @id @default(cuid())
+  title        String
+  description  String
+  url          String     @unique
+  icon         String     // Store icon name from lucide-icons
+  department   Department @relation(fields: [departmentId], references: [id], onDelete: Cascade)
+  departmentId String
+  fields       Field[]
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
+
+model Field {
+  id          String   @id @default(cuid())
+  label       String
+  placeholder String
+  suggestions String[] // Array of suggestions
+  card        Card     @relation(fields: [cardId], references: [id], onDelete: Cascade)
+  cardId      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

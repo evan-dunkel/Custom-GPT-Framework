@@ -1,6 +1,8 @@
 <script lang="ts">
 	import * as Tabs from '$lib/components/ui/tabs/index.js';
 	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
+	import { departments } from '$lib/stores/departments';
+	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
 	import { chats, createChat, deleteChat } from '$lib/stores/chats';
 	import { goto } from '$app/navigation';
@@ -20,6 +22,7 @@
 	import TeamSwitcher from '$lib/components/team-switcher.svelte';
 	import ThemeSwitcher from '$lib/components/theme-switcher.svelte';
 	import * as Collapsible from '$lib/components/ui/collapsible/index.js';
+	import * as icons from 'lucide-svelte';
 
 	// Menu items.
 	const items = [
@@ -50,25 +53,25 @@
 		}
 	];
 
-	// Check if the current path starts with the menu item's URL
-	$: isActive = (itemUrl: string) => {
-		return $page.url.pathname.startsWith(itemUrl);
-	};
+	// // Check if the current path starts with the menu item's URL
+	// $: isActive = (itemUrl: string) => {
+	// 	return $page.url.pathname.startsWith(itemUrl);
+	// };
 
-	const data = {
-		user: {
-			name: 'shadcn',
-			email: 'm@example.com',
-			avatar: '/avatars/shadcn.jpg'
-		},
-		teams: [
-			{
-				name: 'AI Hub',
-				logo: Sparkles
-				// plan: 'Enterprise'
-			}
-		]
-	};
+	// const data = {
+	// 	user: {
+	// 		name: 'shadcn',
+	// 		email: 'm@example.com',
+	// 		avatar: '/avatars/shadcn.jpg'
+	// 	},
+	// 	teams: [
+	// 		{
+	// 			name: 'AI Hub',
+	// 			logo: Sparkles
+	// 			// plan: 'Enterprise'
+	// 		}
+	// 	]
+	// };
 
 	function handleAddChat() {
 		console.log('clicked');
@@ -79,12 +82,33 @@
 	function handleMenuItemClick() {
 		sidebarOpen.set(false);
 	}
+
+	export let data: import('$types').LayoutData;
+
+	$: currentPath = $page.url.pathname;
+	$: isActive = (path: string) => currentPath.startsWith(path);
+
+	// Ensure departments exists with a fallback
+	$: {
+		if (data?.departments) {
+			console.log('Received departments:', data.departments);
+			departments.set(data.departments);
+		}
+	}
+
+	// Add this to check store contents
+	$: console.log('Departments store value:', $departments);
+
+	// In the template section, add this temporarily before the #each loop
+	{
+		JSON.stringify($departments);
+	}
 </script>
 
 <Sidebar.Root>
-	<Sidebar.Header>
+	<!-- <Sidebar.Header>
 		<TeamSwitcher teams={data.teams} />
-	</Sidebar.Header>
+	</Sidebar.Header> -->
 	<Sidebar.Content>
 		<Sidebar.Group>
 			<Tabs.Root value="team" class="w-full">
@@ -143,15 +167,15 @@
 			<Sidebar.GroupLabel>Departments</Sidebar.GroupLabel>
 			<Sidebar.GroupContent>
 				<Sidebar.Menu>
-					{#each items as item (item.title)}
+					{#each $departments as department}
 						<Sidebar.MenuItem>
-							<Sidebar.MenuButton isActive={isActive(item.url)}>
-								{#snippet child({ props })}
-									<a href={item.url} {...props} on:click={handleMenuItemClick}>
-										<item.icon />
-										<span>{item.title}</span>
-									</a>
-								{/snippet}
+							<Sidebar.MenuButton
+								isActive={isActive(`/${department.slug}`)}
+								href={department.slug.startsWith('/') ? department.slug : `/${department.slug}`}
+								on:click={handleMenuItemClick}
+							>
+								<svelte:component this={icons[department.icon] || icons.FileText} class="h-4 w-4" />
+								<span>{department.name || 'Unnamed'}</span>
 							</Sidebar.MenuButton>
 						</Sidebar.MenuItem>
 					{/each}

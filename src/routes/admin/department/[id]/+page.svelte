@@ -16,39 +16,46 @@
 		<form method="POST" action="?/createCard" use:enhance class="max-w-md space-y-4">
 			<Input name="title" placeholder="Card Title" required />
 			<Input name="description" placeholder="Description" required />
-			<Input name="url" placeholder="URL Path" required />
 			<select name="icon" class="w-full rounded border p-2" required>
 				{#each Object.keys(icons) as iconName}
 					<option value={iconName}>{iconName}</option>
 				{/each}
 			</select>
+			<textarea
+				name="messageTemplate"
+				class="w-full rounded border p-2"
+				placeholder="Enter message template with {'{'}variable{'}'} placeholders"
+				rows="4"
+				required
+			></textarea>
 			<Button type="submit">Add Card</Button>
 		</form>
 	</div>
 
-	<div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-		{#each data.department.cards as card}
-			<Card.Root>
-				<Card.Header>
-					<Card.Title class="flex items-center gap-2">
-						<svelte:component this={icons[card.icon]} />
-						{card.title}
-					</Card.Title>
-				</Card.Header>
-				<Card.Content>
-					<p>{card.description}</p>
-					<p class="text-sm text-muted-foreground">URL: {card.url}</p>
-				</Card.Content>
-				<Card.Footer class="flex justify-end gap-2">
-					<form method="POST" action="?/deleteCard" use:enhance>
-						<input type="hidden" name="id" value={card.id} />
-						<Button variant="destructive" type="submit">Delete</Button>
-					</form>
-					<a href="/admin/card/{card.id}">
-						<Button>Manage Fields</Button>
-					</a>
-				</Card.Footer>
-			</Card.Root>
-		{/each}
-	</div>
+	{#if data.department.cards.length > 0}
+		<div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+			{#each data.department.cards as card}
+				<Card.Root>
+					<Card.Header>
+						<Card.Title>{card.title}</Card.Title>
+						<Card.Description>{card.description}</Card.Description>
+					</Card.Header>
+					<Card.Content>
+						<p class="text-sm text-muted-foreground">Template: {card.messageTemplate}</p>
+					</Card.Content>
+					<Card.Footer class="flex justify-between">
+						<Button variant="outline" href="/admin/department/{data.department.id}/card/{card.id}">
+							Manage Fields
+						</Button>
+						<form method="POST" action="?/deleteCard" use:enhance>
+							<input type="hidden" name="id" value={card.id} />
+							<Button variant="destructive" type="submit">Delete</Button>
+						</form>
+					</Card.Footer>
+				</Card.Root>
+			{/each}
+		</div>
+	{:else}
+		<p class="text-muted-foreground">No cards yet. Add one above!</p>
+	{/if}
 </div>

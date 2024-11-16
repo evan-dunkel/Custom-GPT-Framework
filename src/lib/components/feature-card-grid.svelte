@@ -9,10 +9,10 @@
 	}[];
 </script>
 
-<div class="grid w-full grid-cols-1 gap-4 ease-in-out md:grid-cols-2 lg:w-2/3">
+<div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
 	{#each cards as card}
 		<a href={card.url}>
-			<Card.Root class="p-4 {card.url === '#' ? 'text-gray-300' : ''} relative">
+			<Card.Root class="h-full p-4 {card.url === '#' ? 'text-gray-300' : ''} relative">
 				{#if card.url === '#'}
 					<div class="absolute inset-0 z-10 flex items-center justify-center">
 						<span class="rounded-md px-2 py-1 text-lg font-semibold text-neutral-400/50"

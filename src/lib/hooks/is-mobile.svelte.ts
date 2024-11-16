@@ -1,27 +1,23 @@
-import { untrack } from "svelte";
-
-const MOBILE_BREAKPOINT = 768;
+import { browser } from '$app/environment';
+import { writable } from 'svelte/store';
 
 export class IsMobile {
-	#current = $state<boolean>(false);
+	store = writable(false);
 
 	constructor() {
-		$effect(() => {
-			return untrack(() => {
-				const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`);
-				const onChange = () => {
-					this.#current = window.innerWidth < MOBILE_BREAKPOINT;
-				};
-				mql.addEventListener("change", onChange);
-				onChange();
-				return () => {
-					mql.removeEventListener("change", onChange);
-				};
-			});
-		});
+		if (browser) {
+			const checkMobile = () => {
+				this.store.set(window.innerWidth < 768);
+			};
+
+			checkMobile();
+			window.addEventListener('resize', checkMobile);
+		}
 	}
 
 	get current() {
-		return this.#current;
+		let value = false;
+		this.store.subscribe((v) => (value = v))();
+		return value;
 	}
 }

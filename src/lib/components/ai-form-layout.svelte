@@ -5,18 +5,18 @@
 	export let description: string;
 </script>
 
-<div class="flex h-full">
-	<div class="w-[400px] p-4">
-		<Card.Root class="flex flex-col gap-4 p-4">
+<div class="flex flex-col gap-4 lg:flex-row">
+	<div class="w-full lg:w-[400px]">
+		<Card.Root class="p-4">
 			<Card.Title>{title}</Card.Title>
 			<Card.Description>{description}</Card.Description>
-			<Card.Content class="min-w-0">
+			<Card.Content>
 				<slot />
 			</Card.Content>
 		</Card.Root>
 	</div>
 
-	<div class="flex-1 p-4">
+	<div class="flex-1">
 		<slot name="response" />
 	</div>
 </div>

@@ -1,37 +1,27 @@
 import { writable } from 'svelte/store';
+import { nanoid } from 'nanoid';
 
-export interface Chat {
+type Chat = {
 	id: string;
 	title: string;
-	createdAt: Date;
-	messages: Array<{ role: 'user' | 'assistant'; content: string }>;
-}
+};
 
-// Load chats from localStorage on initialization
-const storedChats =
-	typeof localStorage !== 'undefined' ? JSON.parse(localStorage.getItem('chats') || '[]') : [];
+function createChatsStore() {
+	const { subscribe, set, update } = writable<Chat[]>([]);
 
-export const chats = writable<Chat[]>(storedChats);
-
-// Subscribe to changes and save to localStorage
-if (typeof localStorage !== 'undefined') {
-	chats.subscribe((value) => {
-		localStorage.setItem('chats', JSON.stringify(value));
-	});
-}
-
-export function createChat() {
-	const newChat: Chat = {
-		id: crypto.randomUUID(),
-		title: 'New Chat',
-		createdAt: new Date(),
-		messages: []
+	return {
+		subscribe,
+		createChat: () => {
+			const id = nanoid();
+			update((chats) => [...chats, { id, title: 'New Chat' }]);
+			return id;
+		},
+		deleteChat: (id: string) => {
+			update((chats) => chats.filter((chat) => chat.id !== id));
+		},
+		reset: () => set([])
 	};
-
-	chats.update((currentChats) => [newChat, ...currentChats]);
-	return newChat.id;
 }
 
-export function deleteChat(id: string) {
-	chats.update((currentChats) => currentChats.filter((chat) => chat.id !== id));
-}
+export const chats = createChatsStore();
+export const { createChat, deleteChat } = chats;

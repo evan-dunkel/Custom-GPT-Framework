@@ -19,10 +19,7 @@
 				<Input name="title" placeholder="Department Title" required />
 			</div>
 			<div>
-				<Input name="description" placeholder="Description" />
-			</div>
-			<div>
-				<Input name="url" placeholder="URL Path" required />
+				<Input name="description" placeholder="Description" required />
 			</div>
 			<div>
 				<select name="icon" class="w-full rounded border p-2" required>

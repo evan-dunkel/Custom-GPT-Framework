@@ -8,7 +8,7 @@
 </script>
 
 <div class="flex h-screen">
-	<Sidebar />
+	<Sidebar {data} />
 
 	<main class="flex-1 overflow-auto">
 		<slot />

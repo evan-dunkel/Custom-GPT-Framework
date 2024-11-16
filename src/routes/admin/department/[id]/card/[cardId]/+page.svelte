@@ -30,8 +30,23 @@
 		])
 	);
 
+	// Initialize templateVariables
+	let templateVariables: string[] = [];
+
 	// Update templateVariables whenever messageTemplate changes
-	$: templateVariables = extractVariables(messageTemplate);
+	$: {
+		const newVariables = extractVariables(messageTemplate);
+
+		// Remove fields that are no longer in template variables
+		for (const [label] of fieldStates) {
+			if (!newVariables.includes(label)) {
+				fieldStates.delete(label);
+			}
+		}
+
+		templateVariables = newVariables;
+		fieldStates = fieldStates; // Trigger reactivity
+	}
 
 	function handleCheckboxChange(checked: boolean, varName: string) {
 		if (!checked) {

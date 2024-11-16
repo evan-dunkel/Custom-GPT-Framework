@@ -58,7 +58,7 @@
 								<Sidebar.MenuItem>
 									<Sidebar.MenuButton isActive={isCurrentPage(dept.url)}>
 										<a
-											href={dept.url}
+											href={'/' + dept.url}
 											class="flex w-full items-center gap-2 px-2 py-1.5"
 											on:click={handleMenuItemClick}
 										>

@@ -13,6 +13,12 @@ export function createSlug(text: string): string {
 }
 
 export function extractVariables(template: string = ''): string[] {
-	const matches = template.match(/\{([^}]+)\}/g) || [];
-	return matches.map((match) => match.slice(1, -1));
+	const curlyBraceMatches = template.match(/\{([^}]+)\}/g) || [];
+	const squareBracketMatches = template.match(/\[([^\]]+)\]/g) || [];
+
+	const curlyVariables = curlyBraceMatches.map((match) => match.slice(1, -1));
+	const squareVariables = squareBracketMatches.map((match) => match.slice(1, -1));
+
+	// Combine both arrays and remove duplicates
+	return [...new Set([...curlyVariables, ...squareVariables])];
 }

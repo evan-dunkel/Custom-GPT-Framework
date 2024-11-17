@@ -31,11 +31,27 @@
 		api: '/api/chat',
 		onFinish: (message) => {
 			const suggestion = message.content.trim();
+			console.log('AI Icon Response:', suggestion);
+
+			// Try exact match first
 			if (icons[suggestion]) {
 				selectedIcon = suggestion;
 				toast.success('Icon suggestion applied');
 			} else {
-				toast.error('Could not find a matching icon');
+				// Try partial match
+				const normalizedSuggestion = suggestion.toLowerCase().replace(/[-\s]/g, '');
+				const matchingIcon = Object.keys(icons).find(
+					(iconName) =>
+						iconName.toLowerCase().includes(normalizedSuggestion) ||
+						normalizedSuggestion.includes(iconName.toLowerCase())
+				);
+
+				if (matchingIcon) {
+					selectedIcon = matchingIcon;
+					toast.success('Similar icon found and applied');
+				} else {
+					toast.error('Could not find a matching icon');
+				}
 			}
 			isSubmitting = false;
 		},
@@ -74,7 +90,7 @@
 		}
 
 		descPrompt.set(
-			`Generate an extremely concise, one-line description for a company department titled "${titleInput}". It will be displayed in a tooltip, so it should be very short and it is in the context of a digital ai tool to help this company. Only return the description text, nothing else.`
+			`Generate an extremely concise, one-line description for a company department titled "${titleInput}" in the context of a digital tool dashboard. Do not repeat the title or word departmentin the description. Only return the description text, nothing else.`
 		);
 		await handleDescSubmit();
 	}
@@ -103,10 +119,15 @@
 	}
 
 	function handleDescriptionKeyDown(event: KeyboardEvent) {
-		if (event.key === 'Tab' && !descriptionInput && suggestedDescription) {
-			console.log('Tab keydown:', suggestedDescription);
-			event.preventDefault();
-			descriptionInput = suggestedDescription;
+		if (event.key === 'Tab') {
+			if (!descriptionInput && suggestedDescription) {
+				event.preventDefault();
+				descriptionInput = suggestedDescription;
+			}
+			// After handling the suggestion, trigger icon suggestion
+			if (titleInput && descriptionInput) {
+				suggestIcon();
+			}
 		}
 	}
 
@@ -175,12 +196,12 @@
 						{/each}
 					</select>
 				</div>
-				<Button type="button" variant="outline" on:click={suggestIcon} disabled={isSubmitting}>
+				<!-- <Button type="button" variant="outline" on:click={suggestIcon} disabled={isSubmitting}>
 					{#if isSubmitting}
 						<Loader2 class="h-4 w-4 animate-spin" />
 					{/if}
 					Suggest Icon
-				</Button>
+				</Button> -->
 			</div>
 			<Button type="submit">Add Department</Button>
 		</form>

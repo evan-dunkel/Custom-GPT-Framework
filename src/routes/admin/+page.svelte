@@ -22,7 +22,6 @@
 	let isGeneratingDescription = false;
 	let titleInputElement: HTMLInputElement;
 	let descriptionInputElement: HTMLInputElement;
-	let iconSearch = '';
 
 	const {
 		input: iconPrompt,
@@ -34,25 +33,17 @@
 			const suggestion = message.content.trim();
 			console.log('AI Icon Response:', suggestion);
 
-			// Always set the raw suggestion in the search box
-			iconSearch = suggestion;
-
 			// Try exact match first
 			if (icons[suggestion]) {
 				selectedIcon = suggestion;
 				toast.success('Icon suggestion applied');
 			} else {
-				// Try partial match
-				const normalizedSuggestion = suggestion.toLowerCase().replace(/[-\s]/g, '');
-				const matchingIcon = Object.keys(icons).find(
-					(iconName) =>
-						iconName.toLowerCase().includes(normalizedSuggestion) ||
-						normalizedSuggestion.includes(iconName.toLowerCase())
-				);
+				// Extract first word (between first and second capital letter)
+				const firstWord = suggestion.match(/[A-Z][a-z]+/)?.[0];
 
-				if (matchingIcon) {
-					selectedIcon = matchingIcon;
-					toast.success('Similar icon found and applied');
+				if (firstWord && icons[firstWord]) {
+					selectedIcon = firstWord;
+					toast.success('Found icon using simplified name');
 				} else {
 					toast.error('Could not find a matching icon');
 				}
@@ -150,21 +141,6 @@
 
 		await handleIconSubmit();
 	}
-
-	function handleIconSearchChange() {
-		// Try exact match first
-		if (icons[iconSearch]) {
-			selectedIcon = iconSearch;
-		} else {
-			// Try to find first matching icon that starts with the search term
-			const matchingIcon = Object.keys(icons).find((iconName) =>
-				iconName.toLowerCase().startsWith(iconSearch.toLowerCase())
-			);
-			if (matchingIcon) {
-				selectedIcon = matchingIcon;
-			}
-		}
-	}
 </script>
 
 <div class="p-4">
@@ -204,22 +180,15 @@
 					{#if selectedIcon && icons[selectedIcon]}
 						<svelte:component this={icons[selectedIcon]} class="h-6 w-6" />
 					{/if}
-					<div class="w-full space-y-2">
-						<Input
-							name="iconSearch"
-							bind:value={iconSearch}
-							on:input={handleIconSearchChange}
-							placeholder="Search icons..."
-						/>
+					<div class="w-full">
 						<select
 							name="icon"
 							class="h-6 w-full rounded-md border p-4 shadow-sm"
 							required
 							bind:value={selectedIcon}
 						>
-							{#each Object.keys(icons).filter((iconName) => iconName
-									.toLowerCase()
-									.startsWith(iconSearch.toLowerCase())) as iconName}
+							<option value="">Select an icon</option>
+							{#each Object.keys(icons) as iconName}
 								<option value={iconName}>{iconName}</option>
 							{/each}
 						</select>

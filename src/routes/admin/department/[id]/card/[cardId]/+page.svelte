@@ -160,7 +160,7 @@
 							required
 						></textarea>
 					</div>
-					<Button type="submit">Update Card</Button>
+					<Button type="submit">Update Card Fields</Button>
 				</form>
 			</Card.Content>
 		</Card.Root>

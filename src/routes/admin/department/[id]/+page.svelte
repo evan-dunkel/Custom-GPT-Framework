@@ -127,6 +127,8 @@
 	}
 </script>
 
+<!-- change to trigger deploy on vercel -->
+
 <div class="p-4">
 	<h1 class="mb-4 text-2xl font-bold">Manage Cards for {data.department.title}</h1>
 

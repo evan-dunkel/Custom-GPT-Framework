@@ -18,7 +18,11 @@
 		className
 	)}
 	bind:value
+	bind:this={ref}
 	on:blur
 	on:input
+	on:change
+	on:focus
+	on:keydown
 	{...restProps}
 />

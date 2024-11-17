@@ -139,6 +139,7 @@
 						<select
 							id="icon"
 							name="icon"
+							placeholder="Select an icon"
 							class="w-full rounded border p-2"
 							bind:value={data.card.icon}
 							required

@@ -170,6 +170,7 @@
 							class="h-6 w-full rounded-md border p-4 shadow-sm"
 							required
 							bind:value={selectedIcon}
+							placeholder="Select an icon"
 						>
 							<option value="">Select an icon</option>
 							{#each Object.keys(icons) as iconName}

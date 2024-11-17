@@ -184,6 +184,7 @@
 						<select
 							name="icon"
 							class="h-6 w-full rounded-md border p-4 shadow-sm"
+							placeholder="Select an icon"
 							required
 							bind:value={selectedIcon}
 						>

@@ -1,5 +1,5 @@
 import { prisma } from '$lib/server/prisma';
-import { error } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { createSlug } from '$lib/utils';
 import * as icons from 'lucide-svelte';
@@ -38,7 +38,7 @@ export const actions = {
 		const data = await request.formData();
 		const title = data.get('title') as string;
 
-		await prisma.card.create({
+		const newCard = await prisma.card.create({
 			data: {
 				title,
 				description: data.get('description') as string,
@@ -48,6 +48,8 @@ export const actions = {
 				departmentId: params.id
 			}
 		});
+
+		throw redirect(303, `/admin/department/${params.id}/card/${newCard.id}`);
 	},
 
 	deleteCard: async ({ request }) => {

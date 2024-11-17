@@ -22,6 +22,7 @@
 	let isGeneratingDescription = false;
 	let titleInputElement: HTMLInputElement;
 	let descriptionInputElement: HTMLInputElement;
+	let iconSearch = '';
 
 	const {
 		input: iconPrompt,
@@ -32,6 +33,9 @@
 		onFinish: (message) => {
 			const suggestion = message.content.trim();
 			console.log('AI Icon Response:', suggestion);
+
+			// Always set the raw suggestion in the search box
+			iconSearch = suggestion;
 
 			// Try exact match first
 			if (icons[suggestion]) {
@@ -146,6 +150,21 @@
 
 		await handleIconSubmit();
 	}
+
+	function handleIconSearchChange() {
+		// Try exact match first
+		if (icons[iconSearch]) {
+			selectedIcon = iconSearch;
+		} else {
+			// Try to find first matching icon that starts with the search term
+			const matchingIcon = Object.keys(icons).find((iconName) =>
+				iconName.toLowerCase().startsWith(iconSearch.toLowerCase())
+			);
+			if (matchingIcon) {
+				selectedIcon = matchingIcon;
+			}
+		}
+	}
 </script>
 
 <div class="p-4">
@@ -185,23 +204,27 @@
 					{#if selectedIcon && icons[selectedIcon]}
 						<svelte:component this={icons[selectedIcon]} class="h-6 w-6" />
 					{/if}
-					<select
-						name="icon"
-						class="h-6 w-full rounded-md border p-4 shadow-sm"
-						required
-						bind:value={selectedIcon}
-					>
-						{#each Object.keys(icons) as iconName}
-							<option value={iconName}>{iconName}</option>
-						{/each}
-					</select>
+					<div class="w-full space-y-2">
+						<Input
+							name="iconSearch"
+							bind:value={iconSearch}
+							on:input={handleIconSearchChange}
+							placeholder="Search icons..."
+						/>
+						<select
+							name="icon"
+							class="h-6 w-full rounded-md border p-4 shadow-sm"
+							required
+							bind:value={selectedIcon}
+						>
+							{#each Object.keys(icons).filter((iconName) => iconName
+									.toLowerCase()
+									.startsWith(iconSearch.toLowerCase())) as iconName}
+								<option value={iconName}>{iconName}</option>
+							{/each}
+						</select>
+					</div>
 				</div>
-				<!-- <Button type="button" variant="outline" on:click={suggestIcon} disabled={isSubmitting}>
-					{#if isSubmitting}
-						<Loader2 class="h-4 w-4 animate-spin" />
-					{/if}
-					Suggest Icon
-				</Button> -->
 			</div>
 			<Button type="submit">Add Department</Button>
 		</form>

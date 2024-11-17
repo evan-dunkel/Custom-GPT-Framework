@@ -93,12 +93,12 @@
 
 	<div class="grid gap-8 lg:grid-cols-2">
 		<!-- Card Details Section -->
-		<Card.Root>
+		<Card.Root class="flex flex-col">
 			<Card.Header>
 				<Card.Title>Card Details</Card.Title>
 				<Card.Description>Update card information</Card.Description>
 			</Card.Header>
-			<Card.Content>
+			<Card.Content class="flex-grow">
 				<form
 					method="POST"
 					action="?/updateCard"
@@ -161,9 +161,11 @@
 							required
 						></textarea>
 					</div>
-					<Button type="submit">Update Card Fields</Button>
 				</form>
 			</Card.Content>
+			<Card.Footer class="mt-auto">
+				<Button type="submit">Update Card Fields</Button>
+			</Card.Footer>
 		</Card.Root>
 
 		<!-- Fields Management Section -->

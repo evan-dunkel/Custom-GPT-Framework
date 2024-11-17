@@ -202,18 +202,20 @@
 
 	<div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
 		{#each data.departments as dept}
-			<Card.Root>
+			<Card.Root class="flex min-h-[250px] flex-col">
 				<Card.Header>
 					<Card.Title class="flex items-center gap-2">
 						<svelte:component this={icons[dept.icon]} />
 						{dept.title}
 					</Card.Title>
 				</Card.Header>
-				<Card.Content>
-					<p>{dept.description}</p>
-					<p class="text-sm text-muted-foreground">URL: {dept.url}</p>
+				<Card.Content class="flex-grow">
+					<div class="space-y-2">
+						<p>{dept.description}</p>
+						<p class="text-sm text-muted-foreground">URL: {dept.url}</p>
+					</div>
 				</Card.Content>
-				<Card.Footer class="flex justify-end gap-2">
+				<Card.Footer class="mt-auto flex justify-end gap-2">
 					<form method="POST" action="?/deleteDepartment" use:enhance>
 						<input type="hidden" name="id" value={dept.id} />
 						<Button variant="destructive" type="submit">Delete</Button>

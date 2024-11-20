@@ -161,11 +161,9 @@
 							required
 						></textarea>
 					</div>
+					<Button type="submit">Update Card Fields</Button>
 				</form>
 			</Card.Content>
-			<Card.Footer class="mt-auto">
-				<Button type="submit">Update Card Fields</Button>
-			</Card.Footer>
 		</Card.Root>
 
 		<!-- Fields Management Section -->
